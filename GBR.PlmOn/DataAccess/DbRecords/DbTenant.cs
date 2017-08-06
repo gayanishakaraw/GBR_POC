@@ -10,6 +10,14 @@ namespace DataAccess.DbRecords
 {
     class DbTenant : IDbRecord
     {
+        enum Columns
+        {
+            ID,
+            Name,
+            DbConnectionString,
+            Status
+        }
+
         private Int64 Id { get; set; }
         public string Name { get; set; }
         public string DbConnectionString { get; set; }

@@ -20,7 +20,6 @@ namespace GBR.TenancyManagementService.Models
             lock (lockObject)
             {
                 tenantKey = tenantKey.ToLowerInvariant();
-                DbConnector.Instance
 
                 //We shall read these from the tenant meta data DB instead od using hard coded values
                 switch (tenantKey)
