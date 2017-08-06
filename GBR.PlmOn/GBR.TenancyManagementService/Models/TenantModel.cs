@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using GBR.Entity;
+using DataAccess;
 
 namespace GBR.TenancyManagementService.Models
 {
@@ -19,6 +20,7 @@ namespace GBR.TenancyManagementService.Models
             lock (lockObject)
             {
                 tenantKey = tenantKey.ToLowerInvariant();
+                DbConnector.Instance
 
                 //We shall read these from the tenant meta data DB instead od using hard coded values
                 switch (tenantKey)

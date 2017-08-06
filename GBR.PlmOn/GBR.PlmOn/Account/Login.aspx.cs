@@ -1,19 +1,11 @@
 ﻿using System;
 using System.Web;
 using System.Web.UI;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Owin;
-using GBR.PlmOn.Models;
-using System.Threading.Tasks;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using GBR.Entity;
-using System.Net.Http.Formatting;
-using System.Web.Providers.Entities;
 using System.Net;
 using System.IO;
-using System.Xml.Serialization;
 
 namespace GBR.PlmOn.Account
 {

@@ -74,22 +74,11 @@ namespace DataAccess.DbRecords
 
         public List<object> ReadAll()
         {
+
             List<object> records = new List<object>();
+
 
             return records;
         }
-
-        //public DataTable GetAllData()
-        //{
-        //    DbDataAdapter da = new DbDataAdapter();
-              
-
-        //    DataTable dt = new DataTable("Customers");
-
-        //    da.Fill(dt);
-
-        //    return dt;
-
-        //}
     }
 }

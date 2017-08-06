@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccess.DbRecords;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -133,12 +134,13 @@ namespace DataAccess
             instance = null;
         }
 
-        public object ReadData(SqlCommand command)
-        {
-            command.Connection = DbConnection;
-            command.ExecuteReaderAsync();
+        //public SqlDataReader ReadData(Type dataType, SqlCommand command)
+        //{
+        //    SqlDataReader reader;
+        //    command.Connection = DbConnection;
+        //    reader = command.ExecuteReader();
 
-            return new object();
-        }
+        //    return reader;
+        //}
     }
 }
