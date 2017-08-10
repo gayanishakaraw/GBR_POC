@@ -65,6 +65,8 @@ namespace GBR.PlmOn.Account
             WebClient webclient = new WebClient();
             webclient.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
 
+       
+            //using (Stream data = webclient.OpenRead(new Uri(string.Format("http://localhost:52337/api/Tenant?tenantKey={0}", tenantKey)))) // TODO : REMOVE | TESTING ONLY
             using (Stream data = webclient.OpenRead(new Uri(string.Format("http://tenantmanager.GBR.com/api/Tenant?tenantKey={0}", tenantKey))))
             {
                 using (StreamReader reader = new StreamReader(data))

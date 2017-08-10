@@ -52,12 +52,19 @@
   <ItemGroup>
     <Compile Include="DataStore.cs" />
     <Compile Include="DbConnector.cs" />
+    <Compile Include="DbCredential.cs" />
     <Compile Include="DbRecords\DbTenant.cs" />
     <Compile Include="DbRecords\IDbRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLCommands.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DbSetting.xml" />
+    <Content Include="Commands.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="DbSetting.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

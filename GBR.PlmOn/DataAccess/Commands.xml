@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Commands>
+  <ReadCommand name="read_all_tenants" catalog="GBRMetaData">
+    <SQLStatement value="
+              Select * from Tenant
+            " />
+  </ReadCommand>
+  <ReadCommand name="read_tenant_by_id">
+    <Arguments>
+      <Argument name="tenantId" />
+    </Arguments>
+    <SQLStatement value="
+              Select * from Tenant where Id=@tenantId
+            " />
+  </ReadCommand>
+</Commands>

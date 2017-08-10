@@ -12,84 +12,97 @@ using System.Xml.Serialization;
 
 namespace DataAccess
 {
-    public class DbCredential
+    //[Serializable]
+    //public class DbCredentials
+    //{
+    //    [XmlArray("DbCredentials")]
+    //    [XmlArrayItem("DbCredential", typeof(DbCredential))]
+    //    public List<DbCredential> DbSettings { get; set; }
+    //}
+    //public class DbCredential
+    //{
+    //    [XmlElement("UserName")]
+    //    public string UserName { get; set; }
+
+    //    [XmlElement("Password")]
+    //    public string Password { get; set; }
+
+    //    [XmlIgnore]
+    //    [XmlElement("ClearPassword")]
+    //    public string ClearPassword { get; set; }
+
+    //    [XmlElement("DataSource")]
+    //    public string DataSource { get; set; }
+
+    //    [XmlElement("Catalog")]
+    //    public string Catalog { get; set; }
+
+    //    [XmlElement("Timeout")]
+    //    public int Timeout { get; set; }
+
+    //    [XmlElement("Port")]
+    //    public int Port { get; set; }
+
+    //    [XmlElement("DateGenarated")]
+    //    public DateTime DateGenarated { get; set; }
+
+    //    [XmlElement("ConnectionName")]
+    //    public string ConnectionName { get; set; }
+
+    //    [XmlElement("DbType")]
+    //    public string DbType { get; set; }
+
+    //    /// <summary>
+    //    /// Read Db Setting
+    //    /// </summary>
+    //    /// <param name="fileLocation"></param>
+    //    /// <returns></returns>
+    //    public static List<DbCredential> ReadDbSetting(string fileLocation = null)
+    //    {
+    //        if (string.IsNullOrEmpty(fileLocation))
+    //        {
+    //            var dbSettingFilePath = ConfigurationManager.AppSettings.GetValues("DbSetting");
+    //            if (dbSettingFilePath != null)
+    //                fileLocation = dbSettingFilePath[0].ToString();
+    //        }
+
+    //        if (string.IsNullOrEmpty(fileLocation))
+    //            return null;
+
+    //        List<DbCredential> credentials = null;
+
+    //        XmlSerializer serializer = new XmlSerializer(typeof(DbCredentials));
+
+    //        using (StreamReader reader = new StreamReader(fileLocation))
+    //        {
+    //            credentials = (List<DbCredential>)serializer.Deserialize(reader);
+    //        }
+
+    //        if (credentials != null && credentials.Any(record => record.ClearPassword.Length > 0))
+    //        {
+    //            using (TextWriter writer = new StreamWriter(fileLocation))
+    //            {
+    //                foreach (DbCredential crdntl in credentials)
+    //                {
+    //                    var sha1 = new SHA1CryptoServiceProvider();
+    //                    var data = Encoding.ASCII.GetBytes(crdntl.ClearPassword);
+    //                    var sha1data = sha1.ComputeHash(data);
+
+    //                    crdntl.DateGenarated = DateTime.Now;
+    //                }
+    //                serializer.Serialize(writer, credentials);
+    //            }
+    //        }
+
+    //        return credentials;
+    //    }
+    //}
+
+    public sealed class DbConnector
     {
-        [XmlElement("UserName")]
-        public string UserName { get; set; }
+        private static DbConnector instance;
 
-        [XmlElement("Password")]
-        public string Password { get; set; }
-
-        [XmlIgnore]
-        [XmlElement("ClearPassword")]
-        public string ClearPassword { get; set; }
-
-        [XmlElement("DataSource")]
-        public string DataSource { get; set; }
-
-        [XmlElement("Catalog")]
-        public string Catalog { get; set; }
-
-        [XmlElement("Timeout")]
-        public int Timeout { get; set; }
-
-        [XmlElement("Port")]
-        public int Port { get; set; }
-
-        [XmlElement("DateGenarated")]
-        public DateTime DateGenarated { get; set; }
-
-        [XmlElement("ConnectionName")]
-        public string ConnectionName { get; set; }
-
-        [XmlElement("DateGenarated")]
-        public string DbType { get; set; }
-
-        /// <summary>
-        /// Read Db Setting
-        /// </summary>
-        /// <param name="fileLocation"></param>
-        /// <returns></returns>
-        public static DbCredential ReadDbSetting(string fileLocation = null)
-        {
-            if (string.IsNullOrEmpty(fileLocation))
-            {
-                var dbSettingFilePath = ConfigurationManager.AppSettings.GetValues("DbSetting");
-                fileLocation = dbSettingFilePath.ToString();
-            }
-
-            DbCredential credential = null;
-
-            XmlSerializer serializer = new XmlSerializer(typeof(DbCredential));
-
-            using (TextReader reader = new StreamReader(fileLocation))
-            {
-                object obj = serializer.Deserialize(reader);
-                credential = (DbCredential)obj;
-            }
-
-            if (credential != null && credential.ClearPassword.Length > 0)
-            {
-                using (TextWriter writer = new StreamWriter(fileLocation))
-                {
-                    var sha1 = new SHA1CryptoServiceProvider();
-                    var data = Encoding.ASCII.GetBytes(credential.ClearPassword);
-                    var sha1data = sha1.ComputeHash(data);
-
-                    credential.DateGenarated = DateTime.Now;
-                    serializer.Serialize(writer, credential);
-                }
-            }
-
-            return credential;
-        }
-    }
-
-    public class DbConnector
-    {
-        private DbConnector instance;
-
-        public DbConnector Instance
+        public static DbConnector Instance
         {
             get
             {
@@ -100,26 +113,104 @@ namespace DataAccess
             }
         }
 
-        public SqlConnection DbConnection { get; set; }
+        public SqlConnection DbConnectionMetaData { get; set; }
+
+        public SqlConnection DbConnectionApp { get; set; }
+
+        /// <summary>
+        /// Read Db Setting
+        /// </summary>
+        /// <param name="fileLocation"></param>
+        /// <returns></returns>
+        public DbCredentials ReadDbSetting(string fileLocation = null)
+        {
+            if (string.IsNullOrEmpty(fileLocation))
+            {
+                var dbSettingFilePath = ConfigurationManager.AppSettings.GetValues("DbSetting");
+                if (dbSettingFilePath != null)
+                    fileLocation = dbSettingFilePath[0].ToString();
+            }
+
+            if (string.IsNullOrEmpty(fileLocation))
+                return null;
+
+            DbCredentials credentials = null;
+
+            XmlSerializer serializer = new XmlSerializer(typeof(DbCredentials));
+
+            using (StreamReader reader = new StreamReader(fileLocation))
+            {
+                credentials = (DbCredentials)serializer.Deserialize(reader);
+            }
+
+            if (credentials != null && credentials.DbSettings.Any(record => record.ClearPassword.Length > 0))
+            {
+                using (TextWriter writer = new StreamWriter(fileLocation))
+                {
+                    foreach (DbCredential crdntl in credentials.DbSettings)
+                    {
+                        var sha1 = new SHA1CryptoServiceProvider();
+                        var data = Encoding.ASCII.GetBytes(crdntl.ClearPassword);
+                        var sha1data = sha1.ComputeHash(data);
+
+                        crdntl.DateGenarated = DateTime.Now;
+                    }
+                    serializer.Serialize(writer, credentials);
+                }
+            }
+
+            return credentials;
+        }
 
         private DbConnector()
         {
             string connetionString = null;
-            string dbSettingFile = "";
+            string dbSettingFile = ""; // TODO : Get the db setting file location
 
-            DbCredential credentials = DbCredential.ReadDbSetting(dbSettingFile);
-            byte[] pw = Encoding.ASCII.GetBytes(credentials.Password);
-            var hashedPassword = Encoding.ASCII.GetString(pw, 0, pw.Length);
+            DbCredentials credentials = ReadDbSetting(dbSettingFile);
+            byte[] pw;
+            var hashedPassword = string.Empty;
 
-            connetionString = string.Format("Data Source={0};Initial Catalog={1};User ID={2};Password={4};",credentials.DataSource, credentials.Catalog, credentials.UserName, hashedPassword);
-            
-            try
+            foreach (DbCredential cred in credentials.DbSettings)
             {
-                DbConnection = new SqlConnection(connetionString);
-            }
-            catch (Exception ex)
-            {
-                // LOG Error
+                pw = null;
+                hashedPassword = string.Empty; 
+
+                if (cred.ConnectionName.Equals("TenantResolver"))
+                {
+                    pw = Encoding.ASCII.GetBytes(cred.Password);
+                    hashedPassword = Encoding.ASCII.GetString(pw, 0, pw.Length);
+
+                    connetionString = string.Format("Data Source={0};Initial Catalog={1};User ID={2};Password={4};", cred.DataSource, cred.Catalog, cred.UserName, hashedPassword);
+
+                    try
+                    {
+                        DbConnectionMetaData = new SqlConnection(connetionString);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw;
+                        // LOG Error
+                    }
+                }
+
+                if (cred.ConnectionName.Equals("AppDB"))
+                {
+                    pw = Encoding.ASCII.GetBytes(cred.Password);
+                    hashedPassword = Encoding.ASCII.GetString(pw, 0, pw.Length);
+
+                    connetionString = string.Format("Data Source={0};Initial Catalog={1};User ID={2};Password={4};", cred.DataSource, cred.Catalog, cred.UserName, hashedPassword);
+
+                    try
+                    {
+                        DbConnectionApp = new SqlConnection(connetionString);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw;
+                        // LOG Error
+                    }
+                }
             }
         }
 
@@ -128,19 +219,19 @@ namespace DataAccess
         /// </summary>
         public void CloseDbConnection()
         {
-            if (DbConnection != null)
-                DbConnection.Close();
+            if (DbConnectionMetaData != null)
+                DbConnectionMetaData.Close();
 
             instance = null;
         }
 
-        //public SqlDataReader ReadData(Type dataType, SqlCommand command)
-        //{
-        //    SqlDataReader reader;
-        //    command.Connection = DbConnection;
-        //    reader = command.ExecuteReader();
+        public SqlDataReader ExecuteCommand(Type dataType, SqlCommand command)
+        {
+            SqlDataReader reader;
+            command.Connection = DbConnectionMetaData;
+            reader = command.ExecuteReader();
 
-        //    return reader;
-        //}
+            return reader;
+        }
     }
 }

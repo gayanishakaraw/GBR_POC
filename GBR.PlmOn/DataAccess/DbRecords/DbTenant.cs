@@ -2,26 +2,41 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.DbRecords
 {
-    class DbTenant : IDbRecord
+    enum Columns
     {
-        enum Columns
-        {
-            ID,
-            Name,
-            DbConnectionString,
-            Status
-        }
+        ID,
+        Name,
+        DbConnectionString,
+        DateCreated,
+        Status,
+        Alias
+    }
 
-        private Int64 Id { get; set; }
+    public enum State
+    {
+        None,
+        Active,
+        Inactive,
+        Unknown
+    }
+
+    public class DbTenant : IDbRecord
+    {
+        
         public string Name { get; set; }
         public string DbConnectionString { get; set; }
-        public string Status { get; set; }
+        public State Status { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string Alias { get; set; }
+
+        private Int64 Id { get; set; }
         private IDbRecord orginalRecord;
         private IDbRecord currentRecord;
 
@@ -82,9 +97,27 @@ namespace DataAccess.DbRecords
 
         public List<object> ReadAll()
         {
-
             List<object> records = new List<object>();
 
+            SqlCommand command = new SqlCommand("Select * from Tenant");
+            using (SqlDataReader reader = DbConnector.Instance.ExecuteCommand(this.GetType(), command))
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        DbTenant tenant = new DbRecords.DbTenant();
+                        tenant.RecordId = (long)reader[(int)Columns.ID];
+                        tenant.Name = (string)reader[(int)Columns.Name];
+                        tenant.DbConnectionString = (string)reader[(int)Columns.DbConnectionString];
+                        tenant.DateCreated = (DateTime)reader[(int)Columns.DateCreated];
+                        tenant.Status = (State)reader[(int)Columns.Status];
+                        tenant.Alias = (string)reader[(int)Columns.Alias];
+
+                        records.Add(tenant);
+                    }
+                }
+            }
 
             return records;
         }

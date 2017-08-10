@@ -1,26 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<root>
-<DbCredential>
-  <ConnectionName>TenantResolver</ConnectionName>
-  <DbType>MSSQL</DbType>
-  <DataSource>localhost</DataSource>
-  <Catalog>GBRMetaData</Catalog>
-  <UserName>gbSuperUser</UserName>
-  <ClearPassword>1qaz2wsx@</ClearPassword>
-  <Password>1qaz2wsx@</Password>
-  <Timeout>100</Timeout>
-  <Port>1433</Port>
-</DbCredential>
-<DbCredential>
-  <ConnectionName>AppDB</ConnectionName>
-  <DbType>MSSQL</DbType>
-  <DataSource>localhost</DataSource>
-  <Catalog>GBRPLM</Catalog>
-  <UserName>gbUser</UserName>
-  <ClearPassword>1qaz2wsx@</ClearPassword>
-  <Password>1qaz2wsx@</Password>
-  <Timeout>100</Timeout>
-  <Port>1433</Port>
-</DbCredential>
-</root>
-       
+<DbCredentials>
+  <DbCredential>
+    <ConnectionName>TenantResolver</ConnectionName>
+    <DbType>MSSQL</DbType>
+    <DataSource>localhost</DataSource>
+    <Catalog>GBRMetaData</Catalog>
+    <UserName>gbSuperUser</UserName>
+    <ClearPassword>1qaz2wsx@</ClearPassword>
+    <Password>1qaz2wsx@</Password>
+    <Timeout>100</Timeout>
+    <Port>1433</Port>
+  </DbCredential>
+  <DbCredential>
+    <ConnectionName>AppDB</ConnectionName>
+    <DbType>MSSQL</DbType>
+    <DataSource>localhost</DataSource>
+    <Catalog>GBRPLM</Catalog>
+    <UserName>gbUser</UserName>
+    <ClearPassword>1qaz2wsx@</ClearPassword>
+    <Password>1qaz2wsx@</Password>
+    <Timeout>100</Timeout>
+    <Port>1433</Port>
+  </DbCredential>
+</DbCredentials>     
