@@ -12,7 +12,7 @@ namespace DataAccess.DbRecords
         IDbRecord OrginalRecord { get; set; }
         IDbRecord CurrentRecord { get; set; }
 
-        object Read();
+        object Read(int recordId);
 
         List<object> ReadAll();
 
@@ -20,7 +20,7 @@ namespace DataAccess.DbRecords
 
         void DeleteAll();
 
-        int UpdateOne();
+        int UpdateOne(int recordId);
 
         int UpdateAll();
 

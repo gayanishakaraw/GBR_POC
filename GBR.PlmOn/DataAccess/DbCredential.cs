@@ -9,12 +9,12 @@ using System.Xml.Serialization;
 namespace DataAccess
 {
     [Serializable()]
-    [XmlRoot("DbCredentials")]
-    public class DbCredentials
+    [XmlRoot("CredentialsCollection")]
+    public class CredentialsCollection
     {
-        [XmlArray("DbCredentials")]
+        [XmlArray("Credentials")]
         [XmlArrayItem("DbCredential", typeof(DbCredential))]
-        public DbCredential[] DbSettings { get; set; }
+        public DbCredential[] DbCredential { get; set; }
     }
 
     [Serializable()]
@@ -26,7 +26,6 @@ namespace DataAccess
         [XmlElement("Password")]
         public string Password { get; set; }
 
-        [XmlIgnore]
         [XmlElement("ClearPassword")]
         public string ClearPassword { get; set; }
 
@@ -49,6 +48,6 @@ namespace DataAccess
         public string ConnectionName { get; set; }
 
         [XmlElement("DbType")]
-        public string DbType { get; set; }      
+        public string DbType { get; set; }
     }
 }

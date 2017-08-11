@@ -1,25 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<DbCredentials>
-  <DbCredential>
-    <ConnectionName>TenantResolver</ConnectionName>
-    <DbType>MSSQL</DbType>
-    <DataSource>localhost</DataSource>
-    <Catalog>GBRMetaData</Catalog>
-    <UserName>gbSuperUser</UserName>
-    <ClearPassword>1qaz2wsx@</ClearPassword>
-    <Password>1qaz2wsx@</Password>
-    <Timeout>100</Timeout>
-    <Port>1433</Port>
-  </DbCredential>
-  <DbCredential>
-    <ConnectionName>AppDB</ConnectionName>
-    <DbType>MSSQL</DbType>
-    <DataSource>localhost</DataSource>
-    <Catalog>GBRPLM</Catalog>
-    <UserName>gbUser</UserName>
-    <ClearPassword>1qaz2wsx@</ClearPassword>
-    <Password>1qaz2wsx@</Password>
-    <Timeout>100</Timeout>
-    <Port>1433</Port>
-  </DbCredential>
-</DbCredentials>     
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CredentialsCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Credentials>
+    <DbCredential>
+      <UserName>gbSuperUser</UserName>
+      <Password>1qaz2wsx@</Password>
+      <ClearPassword>1qaz2wsx@</ClearPassword> />
+      <DataSource>localhost\SQLEXPRESS</DataSource>
+      <Catalog>GBRMetaData</Catalog>
+      <Timeout>100</Timeout>
+      <Port>1433</Port>
+      <DateGenarated>2017-08-11T13:57:36.012+05:30</DateGenarated>
+      <ConnectionName>TenantResolver</ConnectionName>
+      <DbType>MSSQL</DbType>
+    </DbCredential>
+    <DbCredential>
+      <UserName>gbUser</UserName>
+      <Password>1qaz2wsx@</Password>
+      <ClearPassword>1qaz2wsx@</ClearPassword> />
+      <DataSource>localhost</DataSource>
+      <Catalog>GBRPLM</Catalog>
+      <Timeout>100</Timeout>
+      <Port>1433</Port>
+      <DateGenarated>2017-08-11T13:57:38.625+05:30</DateGenarated>
+      <ConnectionName>AppDB</ConnectionName>
+      <DbType>MSSQL</DbType>
+    </DbCredential>
+  </Credentials>
+</CredentialsCollection>

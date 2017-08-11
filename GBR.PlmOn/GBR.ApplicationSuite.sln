@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
+# Visual Studio Express 14 for Web
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBR.PlmOn", "GBR.PlmOn\GBR.PlmOn.csproj", "{E6CE7DE6-F023-4072-AA3D-B3BE36665073}"
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBR.Entity", "GBR.Entity\GBR.Entity.csproj", "{81FC5CF1-0F11-48DE-A94A-B26E6F4C49F7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{EFE058C1-E5B9-4B7A-A1D3-6BB1128F3E33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityProvidor", "SecurityProvidor\SecurityProvidor.csproj", "{2238B4FC-CDCD-44A9-B1F7-B9C1F9F4AED1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{EFE058C1-E5B9-4B7A-A1D3-6BB1128F3E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFE058C1-E5B9-4B7A-A1D3-6BB1128F3E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFE058C1-E5B9-4B7A-A1D3-6BB1128F3E33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2238B4FC-CDCD-44A9-B1F7-B9C1F9F4AED1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2238B4FC-CDCD-44A9-B1F7-B9C1F9F4AED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2238B4FC-CDCD-44A9-B1F7-B9C1F9F4AED1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2238B4FC-CDCD-44A9-B1F7-B9C1F9F4AED1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

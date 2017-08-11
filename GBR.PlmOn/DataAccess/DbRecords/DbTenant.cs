@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -29,7 +30,6 @@ namespace DataAccess.DbRecords
 
     public class DbTenant : IDbRecord
     {
-        
         public string Name { get; set; }
         public string DbConnectionString { get; set; }
         public State Status { get; set; }
@@ -60,63 +60,67 @@ namespace DataAccess.DbRecords
 
         public void DeleteOne(int tenantId)
         {
-
+            // TODO : Add logic to delete specified tenant record
         }
 
         public void DeleteAll()
         {
-
+            // TODO : Add logic to delete all tenants
         }
 
-        public int UpdateOne()
+        public int UpdateOne(int tenantId)
         {
+            // TODO : Add logic to update on record
             throw new NotImplementedException();
         }
 
         public int UpdateAll()
         {
+            // TODO : Add logic to update all records
             throw new NotImplementedException();
         }
 
         public bool HasChanged()
         {
+            // TODO : Add logic to return true if original record has updated
             throw new NotImplementedException();
         }
 
         public void AuditRecord()
         {
+            // TODO : Add logic to write audit logs to audit trial log specific table
             throw new NotImplementedException();
         }
 
-        public object Read()
+        public object Read(int tenantId)
         {
+            // TODO : Add logic to read one record using the specific record id
             DbTenant record = new DbTenant();
 
             return record;
         }
 
+        /// <summary>
+        /// Read All Tenants
+        /// </summary>
+        /// <returns></returns>
         public List<object> ReadAll()
         {
             List<object> records = new List<object>();
 
-            SqlCommand command = new SqlCommand("Select * from Tenant");
-            using (SqlDataReader reader = DbConnector.Instance.ExecuteCommand(this.GetType(), command))
-            {
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        DbTenant tenant = new DbRecords.DbTenant();
-                        tenant.RecordId = (long)reader[(int)Columns.ID];
-                        tenant.Name = (string)reader[(int)Columns.Name];
-                        tenant.DbConnectionString = (string)reader[(int)Columns.DbConnectionString];
-                        tenant.DateCreated = (DateTime)reader[(int)Columns.DateCreated];
-                        tenant.Status = (State)reader[(int)Columns.Status];
-                        tenant.Alias = (string)reader[(int)Columns.Alias];
+            ArrayList dbrecords = DbConnector.Instance.ExecuteCommand(this.GetType(), "read_all_tenants");
 
-                        records.Add(tenant);
-                    }
-                }
+            foreach (object[] raw in dbrecords)
+            {
+                DbTenant tenant = new DbRecords.DbTenant();
+                tenant.RecordId = (long)(int)raw[(int)Columns.ID];
+                tenant.Name = (string)raw[(int)Columns.Name];
+                tenant.DbConnectionString = (string)raw[(int)Columns.DbConnectionString];
+                tenant.DateCreated = DateTime.Now;//(DateTime)raw[(int)Columns.DateCreated]; // TODO : Get the actual created value
+                tenant.Status = (State)(int)raw[(int)Columns.Status];
+                tenant.Alias = (string)raw[(int)Columns.Alias];
+
+                records.Add(tenant);
             }
 
             return records;

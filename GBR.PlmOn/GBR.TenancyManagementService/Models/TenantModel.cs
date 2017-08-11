@@ -21,30 +21,16 @@ namespace GBR.TenancyManagementService.Models
         {
             lock (lockObject)
             {
-                DbTenant tenants = new DbTenant();
-                var currentTenant = tenants.ReadAll().Find(item => (item as DbTenant).Alias.ToLowerInvariant() == tenantKey.ToLowerInvariant());
+                var currentTenant = new DbTenant().ReadAll().Find(item => (item as DbTenant).Alias.ToLowerInvariant() == tenantKey.ToLowerInvariant());
 
                 if (currentTenant != null)
                 {
-                    DbTenant record = (currentTenant as List<DbTenant>)[0];
+                    DbTenant record = currentTenant as DbTenant;
 
                     return new Tenant() { Id = record.RecordId, Name = record.Name, Status = record.Status.ToString(), DbConnectionString = record.DbConnectionString };
                 }
 
                 return null;
-
-                ////We shall read these from the tenant meta data DB instead od using hard coded values
-                //switch (tenantKey)
-                //{
-                //    case "mas":
-                //        return new Tenant() { Id = 1, Name = "Mas Holdings", Status = "Active", DbConnectionString = "DB Connection 1" };
-                //    case "brandix":
-                //        return new Tenant() { Id = 1, Name = "Brandix", Status = "Active", DbConnectionString = "DB Connection 2" };
-                //    case "hela":
-                //        return new Tenant() { Id = 1, Name = "Hela Clothing", Status = "Active", DbConnectionString = "DB Connection 3" };
-                //    default:
-                //        return null;
-                //}
             }
         }
     }
